@@ -23,7 +23,10 @@ clone_repo() {
   if git clone --depth 1 "https://github.com/KreatioLab/${repo}.git" "$WORK_DIR/$repo" >/dev/null 2>&1; then
     return 0
   fi
-  git clone --depth 1 "https://github.com/ferquintana84/${repo}.git" "$WORK_DIR/$repo" >/dev/null
+  if git clone --depth 1 "https://github.com/ferquintana84/${repo}.git" "$WORK_DIR/$repo" >/dev/null 2>&1; then
+    return 0
+  fi
+  return 1
 }
 
 rewrite_static_docc_base_path() {
@@ -82,22 +85,33 @@ build_swift_docc() {
   local target="$2"
   local output_dir="$OUT_DIR/docs/$repo"
 
+  if [[ ! -d "$WORK_DIR/$repo" ]]; then
+    emit_fallback_page "$repo" "Fallback (repository not accessible in CI)"
+    return 0
+  fi
+
   pushd "$WORK_DIR/$repo" >/dev/null
   mkdir -p "$output_dir"
-  swift package --allow-writing-to-directory "$output_dir" \
+  if ! swift package --allow-writing-to-directory "$output_dir" \
     generate-documentation \
     --target "$target" \
     --disable-indexing \
     --transform-for-static-hosting \
     --hosting-base-path "docs/$repo" \
-    --output-path "$output_dir"
+    --output-path "$output_dir"; then
+    popd >/dev/null
+    emit_fallback_page "$repo" "Fallback (DocC generation failed in CI)"
+    return 0
+  fi
   popd >/dev/null
 }
 
 for repo in "${REPOS[@]}"; do
   echo "==> Cloning ${repo}"
-  clone_repo "$repo"
-
+  if ! clone_repo "$repo"; then
+    echo "WARN: could not clone ${repo}; creating fallback page"
+    emit_fallback_page "$repo" "Fallback (repository not accessible in CI)"
+  fi
 done
 
 # Generate DocC from Swift packages
@@ -107,14 +121,22 @@ build_swift_docc "pagina_web" "KreatioDocs"
 
 # Include already-generated static DocC sites
 for static_repo in "tutorialskreatiodocs" "tutorialesdocc"; do
+  if [[ ! -d "$WORK_DIR/$static_repo" ]]; then
+    emit_fallback_page "$static_repo" "Fallback (repository not accessible in CI)"
+    continue
+  fi
   mkdir -p "$OUT_DIR/docs/$static_repo"
   rsync -a --delete --exclude '.git' --exclude 'CNAME' "$WORK_DIR/$static_repo/" "$OUT_DIR/docs/$static_repo/"
   rewrite_static_docc_base_path "$OUT_DIR/docs/$static_repo" "docs/$static_repo"
 done
 
 # Fallback pages for repos without Swift DocC package
-emit_fallback_page "landing_kreatiolabai" "Fallback (no DocC package detected)"
-emit_fallback_page "KreatioDocs-Fase-Exploracion" "Fallback (content repo, no DocC package detected)"
+if [[ -d "$WORK_DIR/landing_kreatiolabai" ]]; then
+  emit_fallback_page "landing_kreatiolabai" "Fallback (no DocC package detected)"
+fi
+if [[ -d "$WORK_DIR/KreatioDocs-Fase-Exploracion" ]]; then
+  emit_fallback_page "KreatioDocs-Fase-Exploracion" "Fallback (content repo, no DocC package detected)"
+fi
 
 cat > "$OUT_DIR/index.html" <<'HTML'
 <!doctype html>
