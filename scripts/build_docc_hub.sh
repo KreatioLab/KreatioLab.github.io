@@ -6,7 +6,6 @@ WORK_DIR="${ROOT_DIR}/.tmp-docc"
 OUT_DIR="${ROOT_DIR}/public"
 
 REPOS=(
-  "pagina_web"
   "TutorialsKreatioLab"
   "tutorialskreatiodocs"
   "KreatioDocs"
@@ -120,7 +119,6 @@ done
 # Generate DocC from Swift packages
 build_swift_docc "TutorialsKreatioLab" "TutorialsKreatioLab"
 build_swift_docc "KreatioDocs" "KreatioDocs"
-build_swift_docc "pagina_web" "KreatioDocs"
 
 # Include already-generated static DocC sites
 for static_repo in "tutorialskreatiodocs" "tutorialesdocc"; do
@@ -147,33 +145,16 @@ cat > "$OUT_DIR/index.html" <<'HTML'
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KreatioLab Docs Hub</title>
-  <style>
-    :root { --bg:#0b1220; --panel:#121c30; --txt:#eaf0fb; --muted:#a3b1cb; --accent:#22d3ee; --border:#243553; }
-    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; background:radial-gradient(circle at top,#16223f,var(--bg)); color:var(--txt); }
-    main { max-width:1000px; margin:0 auto; padding:2rem; }
-    h1 { font-size:clamp(2rem,4vw,3rem); margin:.3rem 0 1rem; }
-    p { color:var(--muted); }
-    .grid { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
-    a.card { display:block; padding:1rem; border:1px solid var(--border); border-radius:12px; text-decoration:none; color:inherit; background:var(--panel); }
-    a.card:hover { border-color:var(--accent); }
-    .meta { color:var(--muted); font-size:.95rem; margin-top:.4rem; }
-  </style>
+  <title>KreatioLab</title>
+  <meta http-equiv="refresh" content="0; url=/docs/KreatioDocs/documentation/kreatiodocs/">
+  <script>
+    window.location.replace('/docs/KreatioDocs/documentation/kreatiodocs/');
+  </script>
 </head>
 <body>
-  <main>
-    <h1>KreatioLab Documentation Hub</h1>
-    <p>Publicación agregada desde 7 repositorios. Contenido DocC y repos de apoyo en una sola URL.</p>
-    <div class="grid">
-      <a class="card" href="/docs/TutorialsKreatioLab/documentation/tutorialskreatiolab/"><strong>TutorialsKreatioLab</strong><div class="meta">DocC generado desde fuente Swift</div></a>
-      <a class="card" href="/docs/KreatioDocs/documentation/kreatiodocs/"><strong>KreatioDocs</strong><div class="meta">DocC generado desde fuente Swift</div></a>
-      <a class="card" href="/docs/pagina_web/documentation/kreatiodocs/"><strong>pagina_web</strong><div class="meta">DocC generado desde fuente Swift</div></a>
-      <a class="card" href="/docs/tutorialskreatiodocs/documentation/tutorialskreatiolab/"><strong>tutorialskreatiodocs</strong><div class="meta">DocC estático (publicado)</div></a>
-      <a class="card" href="/docs/tutorialesdocc/documentation/testtutorials/"><strong>tutorialesdocc</strong><div class="meta">DocC estático (publicado)</div></a>
-      <a class="card" href="/docs/KreatioDocs-Fase-Exploracion/"><strong>KreatioDocs-Fase-Exploracion</strong><div class="meta">Fallback (sin paquete DocC)</div></a>
-      <a class="card" href="/docs/landing_kreatiolabai/"><strong>landing_kreatiolabai</strong><div class="meta">Fallback (sin paquete DocC)</div></a>
-    </div>
-  </main>
+  <p>Redirigiendo a la documentación principal de KreatioLab:
+    <a href="/docs/KreatioDocs/documentation/kreatiodocs/">abrir ahora</a>.
+  </p>
 </body>
 </html>
 HTML
