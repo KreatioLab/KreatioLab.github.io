@@ -179,5 +179,6 @@ cp "$OUT_DIR/index.html" "$ROOT_DIR/index.html"
 rm -rf "$ROOT_DIR/docs"
 cp -R "$OUT_DIR/docs" "$ROOT_DIR/docs"
 printf "\n# GitHub Pages static publish\n" > "$ROOT_DIR/.nojekyll"
+rm -rf "$ROOT_DIR/.tmp-docc" "$ROOT_DIR/public"
 
 echo "Done: updated index.html and docs/"
