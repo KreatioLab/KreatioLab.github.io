@@ -165,11 +165,11 @@ cat > "$OUT_DIR/index.html" <<'HTML'
     <h1>KreatioLab Documentation Hub</h1>
     <p>Publicación agregada desde 7 repositorios. Contenido DocC y repos de apoyo en una sola URL.</p>
     <div class="grid">
-      <a class="card" href="/docs/TutorialsKreatioLab/"><strong>TutorialsKreatioLab</strong><div class="meta">DocC generado desde fuente Swift</div></a>
-      <a class="card" href="/docs/KreatioDocs/"><strong>KreatioDocs</strong><div class="meta">DocC generado desde fuente Swift</div></a>
-      <a class="card" href="/docs/pagina_web/"><strong>pagina_web</strong><div class="meta">DocC generado desde fuente Swift</div></a>
-      <a class="card" href="/docs/tutorialskreatiodocs/"><strong>tutorialskreatiodocs</strong><div class="meta">DocC estático (publicado)</div></a>
-      <a class="card" href="/docs/tutorialesdocc/"><strong>tutorialesdocc</strong><div class="meta">DocC estático (publicado)</div></a>
+      <a class="card" href="/docs/TutorialsKreatioLab/documentation/tutorialskreatiolab/"><strong>TutorialsKreatioLab</strong><div class="meta">DocC generado desde fuente Swift</div></a>
+      <a class="card" href="/docs/KreatioDocs/documentation/kreatiodocs/"><strong>KreatioDocs</strong><div class="meta">DocC generado desde fuente Swift</div></a>
+      <a class="card" href="/docs/pagina_web/documentation/kreatiodocs/"><strong>pagina_web</strong><div class="meta">DocC generado desde fuente Swift</div></a>
+      <a class="card" href="/docs/tutorialskreatiodocs/documentation/tutorialskreatiolab/"><strong>tutorialskreatiodocs</strong><div class="meta">DocC estático (publicado)</div></a>
+      <a class="card" href="/docs/tutorialesdocc/documentation/testtutorials/"><strong>tutorialesdocc</strong><div class="meta">DocC estático (publicado)</div></a>
       <a class="card" href="/docs/KreatioDocs-Fase-Exploracion/"><strong>KreatioDocs-Fase-Exploracion</strong><div class="meta">Fallback (sin paquete DocC)</div></a>
       <a class="card" href="/docs/landing_kreatiolabai/"><strong>landing_kreatiolabai</strong><div class="meta">Fallback (sin paquete DocC)</div></a>
     </div>
