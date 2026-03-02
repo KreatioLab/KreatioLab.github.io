@@ -16,6 +16,8 @@ jobs:
           fetch-depth: 0
 
       - name: Build aggregated DocC site
+        env:
+          REPO_ACCESS_TOKEN: ${{ secrets.KREATIOLAB_REPOS_TOKEN }}
         run: ./scripts/build_docc_hub.sh
 
       - name: Commit and push if changed

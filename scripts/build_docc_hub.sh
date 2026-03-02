@@ -20,12 +20,15 @@ mkdir -p "$WORK_DIR" "$OUT_DIR/docs"
 
 clone_repo() {
   local repo="$1"
-  if git clone --depth 1 "https://github.com/KreatioLab/${repo}.git" "$WORK_DIR/$repo" >/dev/null 2>&1; then
-    return 0
+  local org_url="https://github.com/KreatioLab/${repo}.git"
+  local user_url="https://github.com/ferquintana84/${repo}.git"
+  if [[ -n "${REPO_ACCESS_TOKEN:-}" ]]; then
+    org_url="https://x-access-token:${REPO_ACCESS_TOKEN}@github.com/KreatioLab/${repo}.git"
+    user_url="https://x-access-token:${REPO_ACCESS_TOKEN}@github.com/ferquintana84/${repo}.git"
   fi
-  if git clone --depth 1 "https://github.com/ferquintana84/${repo}.git" "$WORK_DIR/$repo" >/dev/null 2>&1; then
-    return 0
-  fi
+
+  if git clone --depth 1 "$org_url" "$WORK_DIR/$repo" >/dev/null 2>&1; then return 0; fi
+  if git clone --depth 1 "$user_url" "$WORK_DIR/$repo" >/dev/null 2>&1; then return 0; fi
   return 1
 }
 
