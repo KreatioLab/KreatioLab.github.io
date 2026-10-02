@@ -116,6 +116,12 @@ for repo in "${REPOS[@]}"; do
   fi
 done
 
+if [[ ! -d "$WORK_DIR/KreatioDocs" ]]; then
+  echo "ERROR: KreatioDocs not cloned. Aborting to preserve existing site."
+  rm -rf "$WORK_DIR"
+  exit 1
+fi
+
 # Generate DocC from Swift packages
 build_swift_docc "TutorialsKreatioLab" "TutorialsKreatioLab"
 build_swift_docc "KreatioDocs" "KreatioDocs"
